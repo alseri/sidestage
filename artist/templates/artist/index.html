@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SideStage - Artist Dashboard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/sidestage.js' %}"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo"><span class="logo">SIDE</span><span class="logo bold">STAGE</span></div>
+            <p>{{ user.stage_name }}</p>
+        </div>
+        <div id="nav">
+            <ul class="nav">
+                <li><a href="/artist/profile/"><span class="material-icons">&#xe853;</span> PROFILE</a></li>
+                <li><a href="/logout/"><span class="material-icons">&#xe9ba;</span> LOGOUT</a></li>
+            </ul>
+        </div>
+        <div id="title">
+            <div class="panel_title">
+                <h1>DASHBOARD</h1>
+            </div>
+        </div>
+        <div id="main">
+            <div class="main_tile">
+                <div class="main_head">ANNOUNCEMENTS</div>
+                <div>
+                    <div id="ann_form_style">
+                        <form id="ann_form" action="/artist/add_ann/" method="POST" data-role="new_ann">
+                            {% csrf_token %}
+                            <div class="input-group2">
+                                <input class="input--style-3" type="text" placeholder="YOUR ANNOUNCEMENT"
+                                    name="ann_post">
+                            </div>
+                            <input type="submit" name="submit" id="submit" class="ann_submit" value="POST" />
+                        </form>
+                    </div>
+                </div>
+                <table class="ann_table">
+                    <tbody>
+                        {% if posted_announcements %}
+                        {% for post in posted_announcements|dictsortreversed:"created_at" %}
+                        <tr id="ann_{{post.id}}">
+                            <td class="icon_table"><span class="material-icons ann-box">&#xef49;</span></td>
+                            <td class="date_table">{{ post.created_at|date:"m/d/y" }}</td>
+                            <td>{{ post.ann_post|upper }}</td>
+                            <td><span class="material-icons md-20">&#xe8dc;</span> {{ post.likes.count }}</td>
+                            <td class="delete_table"><a href="/artist/delete_ann/{{post.id}}/" class="delete_ann"
+                                    data-role="{{post.id}}"><span class="material-icons md-20">&#xe872;</span>
+                                    DELETE</a></td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p class="no_data">NO ANNOUNCEMENTS YET!</p>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="main_tile">
+                <div class="main_head">TOUR SCHEDULE</div>
+                <p class="add"><span id="tour_show"><span class="material-icons md-20">&#xe147;</span> ADD SHOW</span>
+                </p>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li> {{ message }} </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div id="tour_display">
+                    <form action="/artist/add_tour/" method="POST" data-role="new_date" id="tour_form">
+                        {% csrf_token %}
+                        <div class="input-group4">
+                            <input class="input--style-6" type="date" placeholder="DATE" name="tour_date">
+                        </div>
+                        <div class="input-group4">
+                            <input class="input--style-6" type="time" placeholder="TIME" name="tour_time">
+                        </div>
+                        <div class="input-group4">
+                            <input class="input--style-6" type="text" placeholder="PRICE" name="tour_price">
+                        </div>
+                        <div class="input-group4">
+                            <input class="input--style-4" type="text" placeholder="CITY, STATE" name="tour_location">
+                        </div>
+                        <div class="input-group4">
+                            <input class="input--style-4" type="text" placeholder="VENUE" name="tour_venue">
+                        </div>
+                        <div class="input-group5">
+                            <input class="input--style-5" type="url" placeholder="TICKET LINK" name="tour_ticket">
+                        </div>
+                        <div class="input-group5">
+                            <input class="input--style-5" type="text" placeholder="DETAILS" name="tour_details">
+                        </div>
+                        <br>
+                        <input type="submit" name="submit" id="submit" class="tour_submit" value="ADD SHOW" />
+                    </form>
+                </div>
+                <table class="tour_table">
+                    <tbody>
+                        {% if posted_tour_date %}
+                        {% for tour_date in posted_tour_date|dictsort:"show_date" %}
+                        <tr id="tour_{{tour_date.id}}" data-id="date_append" class="date_appended">
+                            <td class="cal_table">
+                                <div class="date_box">
+                                    <div class="date_month">{{ tour_date.show_date|date:"M"|upper }}</div>
+                                    <div class="date_day">{{ tour_date.show_date|date:"d" }}</div>
+                                </div>
+                            </td>
+                            <td class="city_table">{{ tour_date.location|upper }}</td>
+                            <td>{{ tour_date.venue|upper }}</td>
+                            <td class="time_table">{{ tour_date.show_time|time:"g:iA" }}</td>
+                            <td class="tour_action_table">
+                                <a href="/artist/delete_tour/{{tour_date.id}}/" class="delete_tour"
+                                    data-role="{{tour_date.id}}"><span class="material-icons md-20">&#xe872;</span>
+                                    DELETE</a></td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p class="no_data">NO SHOWS YET!</p>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="panel">
+            <div class="stat_square">
+                <div class="panel_head">
+                    <p><span class="material-icons md-60">&#xe8d0;</span></p>
+                </div>
+                <h2>{{ fans.count }}</h2>
+                <p><span class="stat_square_title">FANS</span></p>
+            </div>
+            <div class="stat_square">
+                <div class="panel_head">
+                    <p><span class="material-icons md-60">&#xe614;</span></p>
+                </div>
+                <h2 class="shows_count">{{ shows.count }}</h2>
+                <p><span class="stat_square_title">SHOWS</span></p>
+            </div>
+            <div class="stat_square">
+                <div class="panel_head">
+                    <p><span class="material-icons md-60">&#xe53f;</span></p>
+                </div>
+                <h2>{{ rsvps.count }}</h2>
+                <p><span class="stat_square_title">RSVPS</span></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

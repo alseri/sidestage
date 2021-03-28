@@ -1,0 +1,24 @@
+{% for post in posted_announcements|dictsortreversed:"created_at" %}
+<tr id="ann_{{post.id}}">
+    <td class="icon_table"><span class="material-icons ann-box">&#xef49;</span></td>
+    <td class="date_table">{{ post.created_at|date:"m/d/y" }}</td>
+    <td>{{ post.ann_post|upper }}</td>
+    <td><span class="material-icons md-20">&#xe8dc;</span> {{ post.likes.count }}</td>
+    <td class="delete_table"><a href="/artist/delete_ann/{{post.id}}/" class="delete_ann_new" data-role="{{post.id}}"><span class="material-icons md-20">&#xe872;</span> DELETE</a></td>
+</tr>
+{% endfor %}
+
+<script type="text/javascript">
+    $(".delete_ann_new").click(function(e) {
+        e.preventDefault(); 
+        var ann_id = $(this).attr('data-role');
+        let url = $(this).attr("href");
+        $.ajax({
+            url: url,
+            data: { ann_id:ann_id },
+            success: function(){
+                $('#ann_'+ann_id).fadeOut(500, "swing")
+            }
+        });
+    });
+</script>

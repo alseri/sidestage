@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SideStage - Fan Dashboard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/sidestage.js' %}"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo"><span class="logo">SIDE</span><span class="logo bold">STAGE</span></div>
+            <p>{{ user.username }}</p>
+        </div>
+        <div id="nav">
+            <ul class="nav">
+                <li><a href="/artists/"><span class="material-icons">&#xe7ef;</span> ALL ARTISTS</a></li>
+                <li><a href="/logout/"><span class="material-icons">&#xe9ba;</span> LOGOUT</a></li>
+            </ul>
+        </div>
+        <div id="title">
+            <div class="panel_title">
+                <h1>DASHBOARD</h1>
+            </div>
+        </div>
+        <div id="main">
+            <div class="main_tile">
+                <div class="main_head">ARTIST ANNOUNCEMENTS</div>
+                <table class="ann_table">
+                    <tbody>
+                        {% if followed_anns %}
+                        {% for anns in followed_anns|dictsortreversed:"created_at" %}
+                        <tr>
+                            <td class="icon_table"><span class="material-icons ann-box">&#xef49;</span></td>
+                            <td class="date_table">{{ anns.created_at|date:"m/d/y" }}</td>
+                            <td class="table_artist"><a
+                                    href="/artists/{{anns.ann_posted_by.id}}">{{ anns.ann_posted_by.stage_name|upper }}</a>
+                            </td>
+                            <td>{{ anns.ann_post|upper }}</td>
+                            {% if user in anns.likes.all %}
+                            <td class="like_table">
+                                <form action="/fan/like/{{anns.id}}/" method="POST" data-role="like_ann">
+                                    {% csrf_token %}
+                                    <button type="submit" name="submit" id="submit" class="liked_ajax"><span
+                                            class="material-icons md-20">&#xe8dc;</span><span id="like_state">
+                                            LIKED</span></button>
+                                </form>
+                            </td>
+                            {% else %}
+                            <td class="like_table">
+                                <form action="/fan/like/{{anns.id}}/" method="POST" data-role="like_ann">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like_ajax" name="submit" id="submit"><span
+                                            class="material-icons md-20">&#xe8dc;</span><span id="like_state">
+                                            LIKE</span></button>
+                                </form>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p class="no_data">NO ANNOUNCEMENTS YET!</p>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="main_tile">
+                <div class="main_head">UPCOMING SHOWS</div>
+                <table class="tour_table">
+                    <tbody>
+                        {% if fans_shows %}
+                            {% for tour_date in fans_shows|dictsort:"show_date" %}
+                            <tr id="fan_tour_{{tour_date.id}}">
+                                <td class="cal_table">
+                                    <div class="date_box">
+                                        <div class="date_month">{{ tour_date.show_date|date:"M"|upper }}</div>
+                                        <div class="date_day">{{ tour_date.show_date|date:"d" }}</div>
+                                    </div>
+                                </td>
+                                <td class="fan_city_table table_artist"><a
+                                        href="/artists/{{tour_date.tour_added_by.id}}">{{ tour_date.tour_added_by.stage_name|upper }}</a>
+                                </td>
+                                <td class="fan_city_table">{{ tour_date.location|upper }}</td>
+                                <td class="fan_city_table table_artist"><a href="{{tour_date.tickets}}"
+                                        target="_blank">{{ tour_date.venue|upper }}</a></td>
+                                <td class="time_table">{{ tour_date.show_time|time:"g:iA" }}</td>
+                                <td class="time_table">${{ tour_date.price }}</td>
+                                <td class="fan_tour_action_table">
+                                    <div class="cancel"><a
+                                            href="/artists/{{tour_date.tour_added_by.id}}/cancel/{{tour_date.id}}/"
+                                            class="fan_cancel" data-role="{{tour_date.id}}"><span
+                                                class="material-icons md-20">&#xe5c9;</span></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                        <p class="no_data">NO SHOWS YET!</p>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="panel">
+            <div class="stat_square">
+                <div class="panel_head">
+                    <p><span class="material-icons md-60">&#xea23;</span></p>
+                </div>
+                <div class="rewards">
+                    {% for stars in rewards %}
+                    <span class="material-icons md-20">&#xe838;</span>
+                    {% endfor %}
+                    {% for missing_stars in stars_to_go %}
+                    <span class="material-icons md-20 md-dark">&#xe838;</span>
+                    {% endfor %}
+                    <p><span class="stat_square_title">REWARDS</span></p>
+                </div>
+            </div>
+            <div class="stat_square">
+                <div class="panel_head">
+                    <p><span class="material-icons md-60">&#xe53f;</span></p>
+                </div>
+                <h2 class="shows_count">{{ shows_attending }}</h2>
+                <p><span class="stat_square_title">RSVPS</span></p>
+            </div>
+            <div class="stat_square">
+                <div class="panel_head">
+                    <p><span class="material-icons md-60">&#xe8dc;</span></p>
+                </div>
+                <h2>{{ followed_artists }}</h2>
+                <p><span class="stat_square_title">ARTISTS</span></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,590 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+}
+
+/* general style */
+body {  background-color: #f5f5f5; }
+a:link { color: #000; text-decoration: none; }
+a:visited { color: #000; text-decoration: none; }
+
+h4 {
+    width: 85%;
+    margin: 20px auto;
+    padding: 3px;
+    background-color: #f7c10f;
+    border: 2px solid #000000;
+    font-weight: 500;
+}
+
+ul { list-style-type: none; font-size: 20px; }
+
+button {
+    margin: 15px;
+    width: 100px;
+    height: 36px;
+    background-color: #f5f5f5;
+    border: 0px;
+    color: #000000;
+    font-size: 14pt;
+}
+
+button:focus{ outline-color: #424242; box-shadow: none; }
+
+.material-icons { vertical-align: top; }
+.material-icons.md-16 { font-size: 16px; }
+.material-icons.md-20 { font-size: 20px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-60 { font-size: 48px; }
+.material-icons.md-100 { font-size: 124px; }
+.material-icons.md-dark { color: hsla(0, 0%, 36%, 0.541); }
+.material-icons.ann-box { 
+    font-size: 36px; 
+    margin-left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #f7c10f;
+    display: flex;
+    border: 2px solid #000000;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo { font-size: 75px; }
+.logo.bold { font-weight: 500 }
+ul.messages { margin: 20px 0px; list-style-type: none; font-size: 14pt; color: #b81010; }
+.tile_shadow { box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px; }
+
+/* main pages */
+
+#container { justify-content: space-between; text-align: center; background-color: #f5f5f5; margin: 0 auto; }
+
+#header {
+    height: 80px;
+    padding: 25px 50px 10px 50px;
+    display: flex;
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #000000;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+#header p { font-size: 36px; }
+
+#nav {
+    height: 45px;
+    background-color:#f7c10f;
+    display: block;
+    text-align: right;
+    border-bottom: 2px solid #000000;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+#nav li { display: inline-block; padding: 10px 10px; margin-right: 40px; }
+#nav a:link { color: #000; text-decoration: none; }
+
+#main {
+    width: 900px;
+    margin: 20px 20px 20px 0px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
+#main p { font-size: 20px; }
+
+.main_tile {
+    width: 860px;
+    margin: 20px auto;
+    display: inline-block;
+    vertical-align: top;
+    border: 2px solid #000000;
+    padding-bottom: 5px;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.main_head {
+    background-color: #f7c10f;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-bottom: 2px solid #000000;
+}
+
+#panel {
+    width: 150px;
+    margin: 20px 0px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 20px;
+    text-align: center;
+}
+
+#profile_panel {
+    width: 200px;
+    margin: 20px 0px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 20px;
+    text-align: center;
+}
+
+#artist_info { width: 200px; margin-top: 40px; text-align: center; }
+#artist_info p { font-size: 16px; }
+#artist_info a { color: #000; text-decoration: underline; text-decoration-color: #f7c10f; }
+
+#artist_container {
+    margin: 0px auto;
+    width: 884px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: start;
+    align-content: start;
+    padding-bottom: 50px;
+}
+
+#artist_container p { margin-top: 15px; font-size: 18px; }
+
+.artist_box { width: 200px; margin: 10px; padding-top: 20px; flex: 0 0 auto; }
+.artist_profile_box { width: 200px; margin-top: 20px; }
+.table_artist a { color: #000; text-decoration: underline; text-decoration-color: #f7c10f; }
+
+.artist_tile {
+    width: 175px;
+    height: 180px;
+    margin: 10px;
+    padding-top: 10px;
+    background-color: #f7c10f;
+    border: 2px solid #000000;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.artist_photo {
+    width: 150px;
+    margin-top: 2px;
+    background-color: #f5f5f5;
+    border: 2px solid #000000;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.photo_box {
+    width: 200px;
+    margin: 10px;
+    padding-top: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#ann_display {
+    visibility:hidden;
+    height:0px;
+    overflow:hidden;
+    transition:0.7s;
+    -webkit-transition:0.7s;
+}
+
+#ann_display.ann_visible { visibility:visible; height:80px; }
+
+#tour_display {
+    visibility:hidden;
+    height:0px;
+    overflow:hidden;
+    transition:0.8s;
+    -webkit-transition:0.8s;
+}
+
+#tour_display.tour_visible { visibility:visible; height:300px; }
+
+/* home login style */
+
+#login { margin: 7px 40px; height: 40px; display: inline-block; }
+
+#reg_log {
+    width: 740px;
+    margin: 40px auto;
+    padding-bottom: 30px;
+    border: 2px solid #000000;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.reg_form { width: 300px; height: 200px; background-color: cadetblue;margin: 50px auto; }
+#fan_form { width: 300px; height: 200px; }
+#forms p { margin-top: 10px; font-size: 20px; padding: 10px; }
+.form-radio { margin: 0 -10px; margin-bottom: 20px; }
+
+.form-radio input {
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: -9999px; 
+    border: solid 2px #000;
+}
+
+.form-radio input + label {
+    width: 260px;
+    margin: 0 8px;
+    padding: 7px;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    border: solid 2px #000;
+    background-color: #f5f5f5;
+    font-size: 20px;
+    font-weight: 300;
+    color: #888;
+    text-align: center;
+    transition: border-color .15s ease-out,  color .25s ease-out,  background-color .15s ease-out, box-shadow .15s ease-out;
+}
+
+.form-radio input:checked + label {
+    background-color: #f7c10f;
+    color: #000;
+    border: solid 2px #000;
+    z-index: 1;
+    font-weight: 500;
+}
+
+.form-radio input:focus + label { outline: none; }
+.form-radio input:hover { background-color: #f7c10f; color: #000; border-color: #f7c10f; }
+.form-textbox { position: relative; }
+
+.form-textbox label {
+    position: absolute;
+    left: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    font-weight: 600;
+    color: #888;
+    font-size: 14px; 
+}
+
+input[type=radio] { appearance: radio !important; }
+
+.submit {
+    background: #f7c10f;
+    color: #000;
+    border: none;
+    padding: 4px 20px;
+    font-size: 24px;
+    font-weight: 500;
+    border: solid 2px #000;
+}
+
+.login_submit {
+    background: #f7c10f;
+    color: #000;
+    border: none;
+    padding: 4px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    border: solid 2px #000;
+}
+
+/* other forms */
+
+#ann_form { display: flex; justify-content: space-between; }
+#ann_form_style { margin-top: 20px; display: flex; height: 40px; justify-content: space-evenly; }
+
+/* tables */
+
+table.ann_table {
+    margin: 10px auto;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    table-layout: auto;
+    font-size: 18px;
+}
+
+table.ann_table td { padding: 0px 5px; }
+table.ann_table tr { height: 75px; }
+.icon_table { width: 95px; }
+
+.tour_date {
+    height: 75px;
+    padding: 0 20px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tour_city { width: 250px; display: inline-block; font-size: 18px; }
+.tour_venue { width: 300px; display: inline-block; font-size: 18px; }
+.tour_time { width: 80px; display: inline-block; font-size: 18px; }
+
+.date_box {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    border: 2px solid #000000;
+    text-align: center;
+}
+
+.date_month { background-color: #f7c10f; font-size: 16px; font-weight: 500; border-bottom: 2px solid #000000; }
+.date_day { font-size: 24px; font-weight: 300; }
+.cal_table { width: 80px; text-align: center; }
+.date_table { width: 100px; }
+.time_table { width: 80px; text-align: right; }
+.city_table { width: 200px; }
+.fan_city_table { width: 400px; }
+.delete_table { width: 110px; }
+.like_table { width: 90px; }
+.like_ajax { width: 77px; margin-right: 20px; padding: 5px 5px 5px 7px; text-align: left; }
+
+.liked_ajax {
+    width: 90px;
+    margin-right: 20px;
+    padding: 5px;
+    background-color: #f7c10f;
+    border: 2px solid #000000;
+    text-align: left;
+}
+
+.cancel { width: 10px; padding: 0 20px; text-align: left; }
+
+.rsvp {
+    width: 94px;
+    margin-right: 19px;
+    padding: 5px 5px 5px 7px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.going {
+    width: 111px;
+    margin-right: 15px;
+    padding: 5px;
+    background-color: #f7c10f;
+    border: 2px solid #000000;
+    text-align: left;
+    font-size: 16px;
+}
+
+.tour_action_table { width: 95px; }
+.fan_tour_action_table { width: 115px; }
+.new_tour_table_data { width: 100%; }
+
+table.tour_table {
+    margin: 10px auto;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    table-layout: auto;
+    font-size: 16px;
+}
+
+table.tour_table td, table.trip_table th { padding: 10px 10px;}
+table.tour_table thead th { padding: 0px 10px; font-size: 18px; font-weight: 500; color: #000000; }
+
+.panel_title {
+    margin-top: 40px;
+    height: 65px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panel_widget {
+    width: 300px;
+    margin: 20px auto;
+    display: inline-block;
+    vertical-align: top;
+    border: 2px solid #000000;
+    padding-bottom: 5px;
+}
+
+.panel_head {
+    background-color: #f7c10f;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-bottom: 2px solid #000000;
+}
+
+.stat_square {
+    width: 140px;
+    height: 140px;
+    margin: 20px auto;
+    display: inline-block;
+    vertical-align: top;
+    border: 2px solid #000000;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.stat_square p { padding: 2px; }
+.stat_square_title { font-weight: 500; }
+
+.profile_tile {
+    width: 510px;
+    margin: 20px auto;
+    display: inline-block;
+    vertical-align: top;
+    border: 2px solid #000000;
+    padding: 40px 0px;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+#profile_editor {
+    width: 550px;
+    margin: 20px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
+.ann_post {
+    height: 75px;
+    padding: 0 20px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ann_box {
+    width: 50px;
+    height: 50px;
+    background-color: #f7c10f;
+    display: flex;
+    border: 2px solid #000000;
+    align-items: center;
+    justify-content: center;
+}
+
+/* submits */
+
+.ann_submit {
+    padding: 4px 15px;
+    background: #f7c10f;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    border: solid 2px #000;
+}
+
+.tour_submit {
+    margin-top:20px;
+    padding: 8px 15px;
+    background: #f7c10f;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    border: solid 2px #000;
+}
+
+.artists_submit {
+    padding: 4px 40px;
+    background: #f7c10f;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    border: solid 2px #000;
+}
+
+.follow_submit {
+    padding: 4px 40px;
+    background: #f7c10f;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    border: solid 2px #000;
+}
+
+.unfollow_submit {
+    padding: 4px 30px;
+    background: #c4c4c4;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    border: solid 2px #000;
+    text-align: center;
+}
+
+/* general form */
+
+input { outline: none; margin: 0; border: none; font-family: inherit; }
+.input-group { position: relative; margin-bottom: 30px; border-bottom: 2px solid #000; }
+.input-group2 { margin-right: 15px; position: relative; border: 2px solid #000; display: inline-block; }
+.input-group3 { position: relative; display: inline-block; }
+
+.input-group4 {
+    margin-right: 15px;
+    margin-top: 20px;
+    position: relative;
+    border: 2px solid #000;
+    display: inline-block;
+}
+
+.input-group5 {
+    margin-right: 15px;
+    margin-top: 20px;
+    position: relative;
+    border: 2px solid #000;
+    display: inline-block;
+}
+
+.input--style-1 {
+    width: 100%;
+    padding: 5px 0;
+    color: #666;
+    background-color: #f5f5f5;
+    font-size: 24px;
+}
+
+.input--style-2 {
+    width: 200px;
+    padding: 4px 8px;
+    color: #000;
+    background-color: #f5f5f5;
+    font-size: 16px;
+
+}
+
+.input--style-3 {
+    width: 455px;
+    padding: 8px 8px;
+    color: #000;
+    background-color: #f5f5f5;
+    font-size: 16px;
+}
+
+.input--style-4 {
+    width: 250px;
+    padding: 8px 8px;
+    color: #000;
+    background-color: #f5f5f5;
+    font-size: 16px;
+}
+
+.input--style-5 {
+    width: 539px;
+    padding: 8px 8px;
+    color: #000;
+    background-color: #f5f5f5;
+    font-size: 16px;
+}
+
+.input--style-6 {
+    width: 154px;
+    padding: 8px 8px;
+    color: #000;
+    background-color: #f5f5f5;
+    font-size: 16px;
+}
+
+.card-body { padding: 0 100px; }
+
+/* misc */
+.add { margin-top: 15px; font-size: 20px; }
+.no_data { font-size: 16px; padding-top: 20px; }
+.rewards { height: 20px; padding: 10px; }

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SideStage - Home</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        function hideArist(x) {
+            if (x.checked) {
+                document.getElementById("fan_form").style.display = "none";
+                document.getElementById("artist_form").style.display = "initial";
+            }
+        }
+
+        function hideFan(x) {
+            if (x.checked) {
+                document.getElementById("artist_form").style.display = "none";
+                document.getElementById("fan_form").style.display = "initial";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo"><span class="logo">SIDE</span><span class="logo bold">STAGE</span></div>
+        </div>
+        <div id="nav">
+            <div id="login" class="nav">
+                <form action="/login/" method="post">
+                    {% csrf_token %}
+                    <div class="input-group2">
+                        <input class="input--style-2" type="text" placeholder="EMAIL" name="email">
+                    </div>
+                    <div class="input-group2">
+                        <input class="input--style-2" type="password" placeholder="PASSWORD" name="password">
+                    </div>
+                    <div class="input-group3">
+                        <input type="submit" name="submit" id="submit" class="login_submit" value="LOGIN" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="reg_log">
+            <div class="main_head">REGISTER</div>
+            <div id="forms">
+                <p>CREATE NEW ACCOUNT AS:</p>
+                <div class="form-radio">
+                    <input type="radio" onchange="hideFan(this)" name="access_toggle" value="fan" id="fan"
+                        checked="checked">
+                    <label for="fan">FAN</label>
+                    <input type="radio" onchange="hideArist(this)" name="access_toggle" value="artist" id="artist">
+                    <label for="artist">ARTIST</label>
+                </div>
+                <div id="fan_form" style="display:initial" class="reg_form">
+                    <form action="/register_fan/" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="input--style-1" type="text" placeholder="USERNAME" name="username">
+                            </div>
+                            <div class="input-group">
+                                <input class="input--style-1" type="text" placeholder="EMAIL" name="email">
+                            </div>
+                            <div class="input-group">
+                                <input class="input--style-1" type="password" placeholder="PASSWORD" name="password">
+                            </div>
+                            <div class="input-group">
+                                <input class="input--style-1" type="password" placeholder="PASSWORD CONFIRMATION"
+                                    name="cpassword">
+                            </div>
+                            <div class="form-textbox">
+                                <input type="submit" name="submit" id="submit" class="submit" value="CREATE">
+                            </div>
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li> {{ message }} </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+                <div id="artist_form" style="display:none" class="reg_form">
+                    <form action="/register_artist/" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="input--style-1" type="text" placeholder="STAGE NAME" name="stage_name">
+                            </div>
+                            <div class="input-group">
+                                <input class="input--style-1" type="text" placeholder="EMAIL" name="email">
+                            </div>
+                            <div class="input-group">
+                                <input class="input--style-1" type="password" placeholder="PASSWORD" name="password">
+                            </div>
+                            <div class="input-group">
+                                <input class="input--style-1" type="password" placeholder="PASSWORD CONFIRMATION"
+                                    name="cpassword">
+                            </div>
+                            <div class="form-textbox">
+                                <input type="submit" name="submit" id="submit" class="submit" value="CREATE">
+                            </div>
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li> {{ message }} </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

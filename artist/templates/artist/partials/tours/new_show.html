@@ -1,0 +1,31 @@
+{% for tour_date in posted_tour_date|dictsort:"show_date" %}
+<tr id="tour_{{tour_date.id}}">
+    <td class="cal_table">
+        <div class="date_box">
+            <div class="date_month">{{ tour_date.show_date|date:"M"|upper }}</div>
+            <div class="date_day">{{ tour_date.show_date|date:"d" }}</div>
+        </div>
+    </td>
+    <td class="city_table">{{ tour_date.location|upper }}</td>
+    <td>{{ tour_date.venue|upper }}</td>
+    <td class="time_table">{{ tour_date.show_time|time:"g:iA" }}</td>
+    <td class="tour_action_table"><a href="/artist/delete_tour/{{tour_date.id}}/" class="delete_tour" data-role="{{tour_date.id}}"><span class="material-icons md-20">&#xe872;</span> DELETE</a></td>
+</tr>
+{% endfor %}
+
+<script type="text/javascript">
+$(".delete_tour").click(function(e) {
+    e.preventDefault(); 
+    var tour_id = $(this).attr('data-role');
+    let url = $(this).attr("href");
+    $.ajax({
+        url: url,
+        data: { tour_id:tour_id },
+        success: function(){
+            $('#tour_'+tour_id).fadeOut(500, "swing");
+            $('.shows_count').load("/artist/show_new_show_count/");
+            
+        }
+    });
+});
+</script>

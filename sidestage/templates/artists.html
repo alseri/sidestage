@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SideStage - All Artists</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/sidestage.js' %}"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo"><span class="logo">SIDE</span><span class="logo bold">STAGE</span></div>
+            <p>{{ user.username }}</p>
+        </div>
+        <div id="nav">
+            <ul class="nav">
+                <li><a href="/dashboard/fan/"><span class="material-icons">&#xe88a;</span> DASHBOARD</a></li>
+                <li><a href="/logout/"><span class="material-icons">&#xe9ba;</span> LOGOUT</a></li>
+            </ul>
+        </div>
+        <div id="title">
+            <div class="panel_title">
+                <h1>ALL ARTISTS</h1>
+            </div>
+        </div>
+        <div id="artist_container">
+            {% if all_artists %}
+                {% for artist in all_artists %}
+                <a href="/artists/{{artist.id}}/">
+                    <div class="artist_box">
+                        <div class="artist_tile">
+                            <span class="material-icons md-100 artist_photo">&#xe853;</span>
+                            <p>{{ artist.stage_name }}</p>
+                        </div>
+                </a>
+                {% if user in artist.followed_by.all %}
+                <form action="/fan/follow/{{artist.id}}/" method="POST" data-role="follow_button">
+                    {% csrf_token %}
+                    <div class="input-group3">
+                        <input type="submit" name="submit" id="submit" class="unfollow_submit" value="UNFOLLOW" />
+                    </div>
+                </form>
+                {% else %}
+                <form action="/fan/follow/{{artist.id}}/" method="POST" data-role="follow_button">
+                    {% csrf_token %}
+                    <div class="input-group3">
+                        <input type="submit" name="submit" id="submit" class="follow_submit" value="FOLLOW" />
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+    </div>
+
+</body>
+
+</html>

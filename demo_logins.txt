@@ -1,0 +1,9 @@
+to interact with populated data:
+
+demo artist login:
+email: firstartist@sidestage.com
+pass: 123456789
+
+demo fan login:
+email: secondfan@sidestage.com
+pass: 123456789

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SideStage - Artist Profile Editor</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo"><span class="logo">SIDE</span><span class="logo bold">STAGE</span></div>
+            <p>{{ user.stage_name }}</p>
+        </div>
+        <div id="nav">
+            <ul class="nav">
+                <li><a href="/dashboard/artist/"><span class="material-icons">&#xe88a;</span> DASHBOARD</a></li>
+                <li><a href="/logout/"><span class="material-icons">&#xe9ba;</span> LOGOUT</a></li>
+            </ul>
+        </div>
+        <div id="title">
+            <div class="panel_title">
+                <h1>PROFILE EDITOR</h1>
+            </div>
+        </div>
+        <div class="photo_box">
+            <div class="artist_tile">
+                <span class="material-icons md-100 artist_photo">&#xe853;</span>
+                <p>{{ artist.stage_name }}</p>
+            </div>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div class="input-group3">
+                    <input type="submit" name="submit" id="submit" class="artists_submit" value="UPLOAD" />
+                </div>
+            </form>
+        </div>
+        <div id="profile_editor">
+            <div class="profile_tile">
+                <div id="forms">
+                    <div id="artist_form" style="display:initial" class="reg_form">
+                        <form action="/artist/profile_edit/" method="post">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <input class="input--style-1" type="text" placeholder="STAGE NAME"
+                                        name="stage_name">
+                                </div>
+                                <div class="input-group">
+                                    <input class="input--style-1" type="text" placeholder="HOMETOWN" name="hometown">
+                                </div>
+                                <div class="input-group">
+                                    <input class="input--style-1" type="text" placeholder="GENRE" name="genre">
+                                </div>
+                                <div class="input-group">
+                                    <input class="input--style-1" type="text" placeholder="WEBSITE" name="website">
+                                </div>
+                                <div class="input-group">
+                                    <input class="input--style-1" type="text" placeholder="BIO" name="bio">
+                                </div>
+                                <div class="form-textbox">
+                                    <input type="submit" name="submit" id="submit" class="submit" value="UPDATE">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

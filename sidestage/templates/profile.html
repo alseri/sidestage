@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SideStage - {{ artist.stage_name|upper }} Profile</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/sidestage.js' %}"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo"><span class="logo">SIDE</span><span class="logo bold">STAGE</span></div>
+            <p>{{ user.username }}</p>
+        </div>
+        <div id="nav">
+            <ul class="nav">
+                <li><a href="/artists/"><span class="material-icons">&#xe7ef;</span> ALL ARTISTS</a></li>
+                <li><a href="/dashboard/fan/"><span class="material-icons">&#xe88a;</span> DASHBOARD</a></li>
+                <li><a href="/logout/"><span class="material-icons">&#xe9ba;</span> LOGOUT</a></li>
+            </ul>
+        </div>
+        <div id="title">
+            <div class="panel_title">
+                <h1>{{ artist.stage_name|upper }}</h1>
+            </div>
+        </div>
+        <div id="main">
+            <div class="main_tile">
+                <div class="main_head">ARTIST ANNOUNCEMENTS</div>
+                <table class="ann_table">
+                    <tbody>
+                        {% if posted_announcements %}
+                        {% for anns in posted_announcements|dictsortreversed:"created_at" %}
+                        <tr>
+                            <td class="icon_table"><span class="material-icons ann-box">&#xef49;</span></td>
+                            <td class="date_table">{{ anns.created_at|date:"m/d/y" }}</td>
+                            <td>{{ anns.ann_post|upper }}</td>
+                            {% if user in artist.followed_by.all %}
+                            {% if user in anns.likes.all %}
+                            <td class="like_table">
+                                <form action="/fan/like/{{anns.id}}/" method="POST" data-role="like_ann">
+                                    {% csrf_token %}
+                                    <button type="submit" name="submit" id="submit" class="liked_ajax"><span
+                                            class="material-icons md-20">&#xe8dc;</span><span id="like_state">
+                                            LIKED</span></button>
+                                </form>
+                            </td>
+                            {% else %}
+                            <td class="like_table">
+                                <form action="/fan/like/{{anns.id}}/" method="POST" data-role="like_ann">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like_ajax" name="submit" id="submit"><span
+                                            class="material-icons md-20">&#xe8dc;</span><span id="like_state">
+                                            LIKE</span></button>
+                                </form>
+                            </td>
+                            {% endif %}
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p class="no_data">NO ANNOUNCEMENTS YET!</p>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="main_tile">
+                <div class="main_head">UPCOMING SHOWS</div>
+                <table class="tour_table">
+                    <tbody>
+                        {% if posted_tour_date %}
+                        {% for tour_date in posted_tour_date|dictsort:"show_date" %}
+                        <tr>
+                            <td class="cal_table">
+                                <div class="date_box">
+                                    <div class="date_month">{{ tour_date.show_date|date:"M"|upper }}</div>
+                                    <div class="date_day">{{ tour_date.show_date|date:"d" }}</div>
+                                </div>
+                            </td>
+                            <td class="city_table">{{ tour_date.location|upper }}</td>
+                            <td>{{ tour_date.venue|upper }}</td>
+                            <td class="time_table">{{ tour_date.show_time|time:"g:iA" }}</td>
+                            <td class="time_table">${{ tour_date.price }}</td>
+                            {% if user in tour_date.attendee.all %}
+                            <td class="fan_tour_action_table">
+                                <form action="/artists/{{artist.id}}/rsvp/{{tour_date.id}}/" method="POST"
+                                    data-role="rsvp_show">
+                                    {% csrf_token %}
+                                    <button type="submit" name="submit" id="submit" class="going"><span
+                                            class="material-icons md-20">&#xe53f;</span><span id="rsvp_state"> I'M
+                                            GOING</span></button>
+                                </form>
+                            </td>
+                            {% else %}
+                            <td class="fan_tour_action_table">
+                                <form action="/artists/{{artist.id}}/rsvp/{{tour_date.id}}/" method="POST"
+                                    data-role="rsvp_show">
+                                    {% csrf_token %}
+                                    <button type="submit" name="submit" id="submit" class="rsvp"><span
+                                            class="material-icons md-20">&#xe53f;</span><span id="rsvp_state">
+                                            RSVP</span></button>
+                                </form>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p class="no_data">NO SHOWS YET!</p>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="profile_panel">
+            <div class="artist_profile_box">
+                <div class="artist_tile">
+                    <span class="material-icons md-100 artist_photo">&#xe853;</span>
+                </div>
+                {% if user in artist.followed_by.all %}
+                <form action="/fan/follow/{{artist.id}}/" method="POST" data-role="follow_button">
+                    {% csrf_token %}
+                    <div class="input-group3">
+                        <input type="submit" name="submit" id="submit" class="unfollow_submit" value="UNFOLLOW" />
+                    </div>
+                </form>
+                {% else %}
+                <form action="/fan/follow/{{artist.id}}/" method="POST" data-role="follow_button">
+                    {% csrf_token %}
+                    <div class="input-group3">
+                        <input type="submit" name="submit" id="submit" class="follow_submit" value="FOLLOW" />
+                    </div>
+                </form>
+                {% endif %}
+                <div id="artist_info">
+                    <h4>HOMETOWN</h4>
+                    <p>{{artist.hometown}}</p>
+                    <h4>BIO</h4>
+                    <p>{{artist.bio}}</p>
+                    <h4>LINKS</h4>
+                    <p><a href="{{artist.website}}" class="">{{artist.website}}</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
